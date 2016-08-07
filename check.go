@@ -23,15 +23,10 @@ func IsUsername(username string) bool {
 ///检测是否为map[string]string类型
 func IsMap_String_String(obj interface{}) bool {
 	switch obj.(type) {
-
 	case map[string]string:
-
 		return true
-
 	default:
-
 		return false
-
 	}
 
 }
