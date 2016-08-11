@@ -4,6 +4,7 @@ import (
 	"reflect"
 	"fmt"
 	"time"
+	"net/url"
 )
 
 var
@@ -34,11 +35,11 @@ type Client struct {
 	C         string `json:"c"`
 	A         string `json:"a"`
 	P         string `json:"p" gorm:"type:TEXT"`
-	IP        string `json:"ip"`
+	IP        *string `json:"ip"`
 	BaseModel
 }
 
- func SetDefault(v reflect.Value, t reflect.Type) error {
+ func SetDefault(v reflect.Value, t reflect.Type,ss url.Values) error {
 
 	if t.Kind() == reflect.Ptr {
 		fmt.Println("1是指针")
@@ -56,11 +57,19 @@ type Client struct {
 			fieldV := v.Field(i)
 			fieldT := t.Field(i)
 			fmt.Println("本轮", fieldT.Name, fieldV.Type())
-			fieldV = reflect.Indirect(fieldV)
+			if fieldV.Type().Kind()==reflect.Ptr{
+				fieldV=fieldV.Elem()
+				fieldV = reflect.Indirect(fieldV)
+
+			}
+
+
 
 			switch fieldV.Kind() {
-			case reflect.Uint:
+ 			case reflect.Uint:
 				fmt.Println("unit设置0")
+				fieldV.SetUint(16)
+				//ss.Get(fieldT.Name)
 			case reflect.Int:
 				fieldV.SetInt(42)
 			case reflect.String:
@@ -72,11 +81,19 @@ type Client struct {
 					fmt.Println("111时间设置初始值")
 				} else {
 					fmt.Println("进入下一轮")
-					SetDefault(fieldV.Addr(), fieldV.Type())
-
+					SetDefault(fieldV.Addr(), fieldV.Type(),ss)
 				}
+			case reflect.Ptr:
+				fmt.Println("哈哈哈")
 			default:
-				fmt.Println("Unsupported kind: " + v.Kind().String())
+				if v.Type()==reflect.TypeOf(new(time.Time)){
+					fmt.Println("你就是个时间")
+				}
+				fmt.Println("Unsupported kind: " , v.Addr().Kind())
+				fmt.Println("Unsupported kind: " , v.Kind())
+				fmt.Printf("Unsupported kind: %v\n" ,v.Type().String())
+				//SetDefault(fieldV, fieldV.Type(),ss)
+
 			}
 		}
 
@@ -90,7 +107,9 @@ func main() {
 
 	t := reflect.TypeOf(&a)
 	v := reflect.ValueOf(&a)
-	err := SetDefault(v, t)
+
+	ss:=url.Values{}
+	err := SetDefault(v, t,ss)
 	if err != nil {
 		fmt.Println(err)
 	}
