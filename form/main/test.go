@@ -38,53 +38,7 @@ type Client struct {
 	BaseModel
 }
 
-func SetDefault1(v reflect.Value, t reflect.Type) error {
-	//
-	//t := reflect.TypeOf(s)
-	//v := reflect.ValueOf(s)
-	if t.Kind() == reflect.Ptr {
-		fmt.Println("1是指针")
-
-		t = t.Elem()
-		v = v.Elem()
-
-	}
-	v = reflect.Indirect(v)
-
-
-
-	//fmt.Println("shuchu", v.String(), v.Type(), v.Kind(), t.Field(0).Name(), t.String())
-	switch v.Kind() {
-	case reflect.Uint:
-		fmt.Println("")
-	case reflect.Int:
-		v.SetInt(42)
-	case reflect.String:
-		v.SetString("Foo")
-	case reflect.Bool:
-		v.SetBool(true)
-	case reflect.Struct:
-		if v.Type().String() == "time.Time" {
-			fmt.Println("111时间设置初始值")
-		} else {
-
-			fmt.Printf("struct%s共有%d个字段\n", t.Name(), t.NumField())
-			for i := 0; i < t.NumField(); i++ {
-				fieldV := v.Field(i)
-				fieldT := t.Field(i)
-				fmt.Println("下一轮", fieldT.Name, fieldV.Type())
-				SetDefault1(fieldV.Addr(), fieldV.Type())
-			}
-
-		}
-	default:
-		fmt.Println("Unsupported kind: " + v.Kind().String())
-	}
-
-	return nil
-
-}
-func SetDefault(v reflect.Value, t reflect.Type) error {
+ func SetDefault(v reflect.Value, t reflect.Type) error {
 
 	if t.Kind() == reflect.Ptr {
 		fmt.Println("1是指针")
