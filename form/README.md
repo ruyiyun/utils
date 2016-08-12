@@ -4,7 +4,7 @@ SetDefault
 将url.Values 对应转换到struct
 
 
-`
+```
 type Third struct {
 	Name string
 	Aget uint
@@ -31,8 +31,8 @@ type Client struct {
 	P         string `json:"p" gorm:"type:TEXT"`
 	IP        string `json:"ip"`
 	BaseModel
-}`
-
+}
+```
 	   `a := Client{}
 
 	ss := url.Values{
