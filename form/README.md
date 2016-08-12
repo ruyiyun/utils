@@ -33,12 +33,11 @@ type Client struct {
 	BaseModel
 }
 ```
-	   `a := Client{}
+a := Client{}
 
-	ss := url.Values{
-
-		"Operator": []string{"zhangsanfeng"},
-		"UserCode": []string{"wangwu"},
-		"Name":     []string{"lisilisi"},
-	}
-	err := SetDefault(ss, &a)`
+ss := url.Values{
+	"Operator": []string{"zhangsanfeng"},
+	"UserCode": []string{"wangwu"},
+	"Name":     []string{"lisilisi"},
+}
+err := SetDefault(ss, &a)
