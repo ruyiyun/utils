@@ -1,11 +1,10 @@
-package form
+# utils
 
-import (
-	"net/url"
-	"testing"
-	"time"
-)
+SetDefault
+将url.Values 对应转换到struct
 
+
+`
 type Third struct {
 	Name string
 	Aget uint
@@ -32,10 +31,9 @@ type Client struct {
 	P         string `json:"p" gorm:"type:TEXT"`
 	IP        string `json:"ip"`
 	BaseModel
-}
+}`
 
-func TestSetDefault(t *testing.T) {
-	a := Client{}
+	   `a := Client{}
 
 	ss := url.Values{
 
@@ -43,17 +41,4 @@ func TestSetDefault(t *testing.T) {
 		"UserCode": []string{"wangwu"},
 		"Name":     []string{"lisilisi"},
 	}
-	err := SetDefault(ss, &a)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if a.Operator != "zhangsanfeng" {
-		t.Fail()
-	}
-	if a.UserCode != "wangwu" {
-		t.Fail()
-	}
-	if a.Name != "lisilisi" {
-		t.Fail()
-	}
-}
+	err := SetDefault(ss, &a)`
