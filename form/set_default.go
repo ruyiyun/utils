@@ -17,9 +17,9 @@ func SetDefault(ss url.Values, obj interface{}) error {
 }
 
 func setDefault(v reflect.Value, t reflect.Type, ss url.Values) error {
-	fmt.Println("\nv.CanSet():", v.CanSet(), "v.IsValid():", v.IsValid())
+	//fmt.Println("\nv.CanSet():", v.CanSet(), "v.IsValid():", v.IsValid())
 	if t.Kind() != reflect.Ptr && t.Kind() != reflect.Struct {
-		fmt.Println("不是struct,也不是ptr")
+		//fmt.Println("不是struct,也不是ptr")
 		return errors.New("不是struct,也不是ptr")
 	}
 	if t.Kind() == reflect.Ptr {
@@ -29,24 +29,24 @@ func setDefault(v reflect.Value, t reflect.Type, ss url.Values) error {
 
 	v = reflect.Indirect(v)
 
-	fmt.Println("\nv.CanSet():", v.CanSet(), "v.IsValid():", v.IsValid())
-	fmt.Println("v的Type", v.Type())
-	fmt.Println("v的kind", v.Type().Kind())
-	fmt.Printf("struct%s共有%d个字段\n", t.Name(), t.NumField())
+	//fmt.Println("\nv.CanSet():", v.CanSet(), "v.IsValid():", v.IsValid())
+	//fmt.Println("v的Type", v.Type())
+	//fmt.Println("v的kind", v.Type().Kind())
+	//fmt.Printf("struct%s共有%d个字段\n", t.Name(), t.NumField())
 
 	for i := 0; i < t.NumField(); i++ {
 		fieldV := v.Field(i)
 		fieldT := t.Field(i)
 
-		fmt.Println(fieldV.Type())
+		//fmt.Println(fieldV.Type())
 		if fieldV.Kind() == reflect.Ptr {
 			//todo fmt.Println("如何处理")
 			continue
 		}
 		fieldV = reflect.Indirect(fieldV)
 
-		fmt.Println("\n本轮", fieldT.Name, fieldV.Type(), fieldT.Type, fieldV.Kind())
-		fmt.Println("\nfieldV.CanSet():", fieldV.CanSet(), "fieldV.IsValid():", fieldV.IsValid())
+		//fmt.Println("\n本轮", fieldT.Name, fieldV.Type(), fieldT.Type, fieldV.Kind())
+		//fmt.Println("\nfieldV.CanSet():", fieldV.CanSet(), "fieldV.IsValid():", fieldV.IsValid())
 
 		if !fieldV.CanSet() {
 			continue
@@ -125,11 +125,11 @@ func setDefault(v reflect.Value, t reflect.Type, ss url.Values) error {
 				fieldV.Set(reflect.ValueOf(t))
 
 			} else {
-				fmt.Println("进入下一轮")
+				//fmt.Println("进入下一轮")
 				setDefault(fieldV.Addr(), fieldV.Type(), ss)
 			}
 		case reflect.Ptr:
-			fmt.Println("todo怎么处理?什么情况能到这里?")
+			//fmt.Println("todo怎么处理?什么情况能到这里?")
 
 		default:
 
