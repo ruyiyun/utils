@@ -14,11 +14,11 @@ type Third struct {
 type BaseModel struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	DeletedAt time.Time `sql:"index"`
-	CreatedBy string    `json:"created_by"`
-	UpdatedBy string    `json:"updated_by"`
-	DeletedBy string    `json:"deleted_by"`
-	Operator  string    `gorm:"-" json:"operator"`
+	DeletedAt *time.Time `sql:"index"`
+	CreatedBy string     `json:"created_by"`
+	UpdatedBy string     `json:"updated_by"`
+	DeletedBy string     `json:"deleted_by"`
+	Operator  string     `gorm:"-" json:"operator"`
 	Third
 }
 type Client struct {

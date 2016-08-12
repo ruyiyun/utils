@@ -37,6 +37,12 @@ func setDefault(v reflect.Value, t reflect.Type, ss url.Values) error {
 	for i := 0; i < t.NumField(); i++ {
 		fieldV := v.Field(i)
 		fieldT := t.Field(i)
+
+		fmt.Println(fieldV.Type())
+		if fieldV.Kind() == reflect.Ptr {
+			//todo fmt.Println("如何处理")
+			continue
+		}
 		fieldV = reflect.Indirect(fieldV)
 
 		fmt.Println("\n本轮", fieldT.Name, fieldV.Type(), fieldT.Type, fieldV.Kind())
