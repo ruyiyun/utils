@@ -144,3 +144,10 @@ func GetDateAsDirName() string {
 	dateString := DateFormat(time.Now(), format)
 	return dateString
 }
+
+//以时间作为文件夹目录
+func GetDateYYYYMMDD() string {
+	format := "20060102"
+	dateString := DateFormat(time.Now(), format)
+	return dateString
+}

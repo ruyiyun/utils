@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"encoding/json"
 	"fmt"
 	"runtime"
 )
@@ -9,7 +10,14 @@ import (
 func GetExecFuncId(key ...interface{}) (Id string) {
 
 	if funcName, _, _, ok := runtime.Caller(1); ok {
-		Id = fmt.Sprintf("%v_%v", runtime.FuncForPC(funcName).Name(), key)
+		if len(key) > 0 {
+			js1, _ := json.Marshal(key[0])
+
+			Id = fmt.Sprintf("%v_%v", runtime.FuncForPC(funcName).Name(), MD5(string(js1)))
+		} else {
+			Id = fmt.Sprintf("%v", runtime.FuncForPC(funcName).Name())
+
+		}
 	}
 
 	return
