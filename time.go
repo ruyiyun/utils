@@ -101,6 +101,12 @@ func TimeLocalMDHString() string {
 	return dateString
 }
 
+//返回当前时区的当前时间的字符串
+func TimeLocalYYYYMMDDHHMMSSString() string {
+	dateString := DateFormat(TimeLocal(), "20060102150405")
+	return dateString
+}
+
 //将unix 时间戳转换为时间字符串
 //1441070992=>2015-09-01 09:29:52
 func Timestamp2String(timestamp int64) string {
